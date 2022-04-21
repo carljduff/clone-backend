@@ -1,10 +1,11 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Event(models.Model):
     title = models.CharField(max_length=200)
-    description = models.CharField(null=True)
+    description = models.CharField(max_length=2000, null=True)
     img = models.ImageField()
-    address = models.ForeignKey('Address', on_delete= models.CASCADE)
+    address = models.CharField(max_length=500, null=True)
     date = models.DateField()
     start_time = models.TimeField()
     end_time = models.TimeField()
@@ -18,5 +19,28 @@ class Event(models.Model):
         (CANCELLED, 'Event Cancelled')
     )
     status = models.CharField(max_length=3, choices=STATUS_CHOICES, default=GOING)
+    guests = models.ManyToManyField(User, related_name='guests')
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class Category(models.Model):
+    label = models.CharField(max_length=200)
+
+    class Meta:
+        verbose_name_plural = "Categories"
+
+class Item(models.Model):
+    label = models.CharField(max_length=500)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class Post(models.Model):
+    text = models.CharField(max_length=1000)
+    date = models.DateTimeField(auto_now_add=True)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+
+
 
