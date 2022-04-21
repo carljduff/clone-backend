@@ -22,11 +22,17 @@ class Event(models.Model):
     guests = models.ManyToManyField(User, related_name='guests')
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.title
+
 class Category(models.Model):
     label = models.CharField(max_length=200)
 
     class Meta:
         verbose_name_plural = "Categories"
+    
+    def __str__(self):
+        return self.label
 
 class Item(models.Model):
     label = models.CharField(max_length=500)
@@ -34,11 +40,17 @@ class Item(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.label
+
 class Post(models.Model):
     text = models.CharField(max_length=1000)
     date = models.DateTimeField(auto_now_add=True)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.text
 
 
 
