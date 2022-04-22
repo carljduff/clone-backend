@@ -3,7 +3,7 @@ from .models import Event, Category, Item, Post
 from django.contrib.auth.models import User
 
 class EventSerializer(serializers.ModelSerializer):
-    # user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    owner = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
     class Meta:
         model = Event
         fields = '__all__'

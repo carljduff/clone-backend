@@ -4,21 +4,18 @@ from django.contrib.auth.models import User
 class Event(models.Model):
     title = models.CharField(max_length=200)
     description = models.CharField(max_length=2000, null=True)
-    img = models.ImageField()
+    img = models.ImageField(upload_to='clones/images/', blank=True, default='')
     address = models.CharField(max_length=500, null=True)
     date = models.DateField()
     start_time = models.TimeField()
     end_time = models.TimeField()
     isPublic = models.BooleanField(default=False)
-    GOING = 1
-    PAST = 2
-    CANCELLED = 3
     STATUS_CHOICES = (
-        (GOING, 'Ongoing'),
-        (PAST, 'Past Event'),
-        (CANCELLED, 'Event Cancelled')
+        ('1', 'Ongoing'),
+        ('2', 'Past Event'),
+        ('3', 'Event Cancelled')
     )
-    status = models.CharField(max_length=3, choices=STATUS_CHOICES, default=GOING)
+    status = models.CharField(max_length=3, choices=STATUS_CHOICES, default='1')
     guests = models.ManyToManyField(User, related_name='guests')
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -53,6 +50,10 @@ class Post(models.Model):
         return self.text
 
 
+class ExampleUser(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
 
+    def full_name(self):
+        return self.user.get_full_name()
 
 
