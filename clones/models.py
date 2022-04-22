@@ -50,10 +50,5 @@ class Post(models.Model):
         return self.text
 
 
-class ExampleUser(models.Model):
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
-
-    def full_name(self):
-        return self.user.get_full_name()
 
 
