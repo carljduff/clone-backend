@@ -28,7 +28,8 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = ['https://*.gitpod.io']
 
-AUTH_USER_MODEL = 'clones.CustomUser'
+AUTH_USER_MODEL = "clones.CustomUser"
+
 # Application definition
 
 INSTALLED_APPS = [
