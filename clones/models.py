@@ -1,5 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 
 class Event(models.Model):
     title = models.CharField(max_length=200)
@@ -16,8 +17,8 @@ class Event(models.Model):
         ('3', 'Event Cancelled')
     )
     status = models.CharField(max_length=3, choices=STATUS_CHOICES, default='1')
-    guests = models.ManyToManyField(User, related_name='guests')
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    guests = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='guests')
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
@@ -35,7 +36,7 @@ class Item(models.Model):
     label = models.CharField(max_length=500)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.label
@@ -44,11 +45,13 @@ class Post(models.Model):
     text = models.CharField(max_length=1000)
     date = models.DateTimeField(auto_now_add=True)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.text
 
-
+class CustomUser(AbstractUser):
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} - {self.email}"
 
 
