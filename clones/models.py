@@ -1,5 +1,7 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 class Event(models.Model):
     title = models.CharField(max_length=200)
@@ -49,6 +51,9 @@ class Post(models.Model):
     def __str__(self):
         return self.text
 
+class CustomUser(AbstractUser):
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} - {self.email}"
 
 
 
