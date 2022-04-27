@@ -27,8 +27,8 @@ router.register(r'posts', views.PostViewSet)
 # router.register(r'users', views.UserViewSet)
 
 urlpatterns = [
-    path('user/signup/', views.UserCreate.as_view(), name="create_user"),
-    path('user/login/', jwt_views.TokenObtainPairView.as_view(), name='token_create'),
+    path('signup/', views.UserCreate.as_view(), name="create_user"),
+    path('login/', jwt_views.TokenObtainPairView.as_view(), name='token_create'),
     path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     path('admin/', admin.site.urls),
     path('api-auth', include('rest_framework.urls')),
