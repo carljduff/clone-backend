@@ -27,12 +27,22 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = ['https://*.gitpod.io']
+CORS_ALLOW_ALL_ORIGINS: True
+# CORS_ALLOW_METHODS = [
+#     'DELETE',
+#     'GET',
+#     'OPTIONS',
+#     'PATCH',
+#     'POST',
+#     'PUT',
+# ]
 
 AUTH_USER_MODEL = "clones.CustomUser"
 
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'clones.apps.ClonesConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -43,7 +53,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'django.contrib.sites',
-    'corsheaders',
 ]
 
 SITE_ID = 1
