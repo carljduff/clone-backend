@@ -17,7 +17,7 @@ class Event(models.Model):
         ('3', 'Event Cancelled')
     )
     status = models.CharField(max_length=3, choices=STATUS_CHOICES, default='1')
-    guests = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='guests')
+    guests = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='guests', blank=True)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
