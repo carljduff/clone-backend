@@ -15,7 +15,7 @@ class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
     filter_backends = [SearchFilter, OrderingFilter]
-    filterset_fields = ['id', 'title']
+    filterset_fields = ['owner']
     search_fields = ['=title', 'description']
 
 class CategoryViewSet(viewsets.ModelViewSet):
