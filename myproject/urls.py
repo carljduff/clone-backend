@@ -22,7 +22,7 @@ from rest_framework import routers
 router = routers.DefaultRouter()
 router.register(r'events', views.EventViewSet, basename='events')
 router.register(r'categories', views.CategoryViewSet)
-router.register(r'items', views.ItemViewSet)
+router.register(r'items', views.ItemViewSet, basename='items')
 router.register(r'posts', views.PostViewSet)
 # router.register(r'users', views.UserViewSet)
 

@@ -36,8 +36,11 @@ class CategoryViewSet(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
 
 class ItemViewSet(viewsets.ModelViewSet):
-    queryset = Item.objects.all()
     serializer_class = ItemSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return Item.objects.filter(user=user)
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
