@@ -10,6 +10,9 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 from .serializers import EventSerializer, CategorySerializer, ItemSerializer, PostSerializer, CustomUserSerializer
 from .models import Event, Category, Item, Post, CustomUser
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import BasicAuthentication
 
 class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
@@ -17,6 +20,17 @@ class EventViewSet(viewsets.ModelViewSet):
     filter_backends = [SearchFilter, OrderingFilter]
     filterset_fields = ['owner']
     search_fields = ['=title', 'description']
+
+class EventListView(generics.ListAPIView):
+    serializer_class = EventSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        user = self.request.user
+        if not user.is_anonymous:
+            return Event.objects.filter(owner=user)
+        
+        return Event.objects.none()
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
