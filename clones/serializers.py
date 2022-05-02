@@ -21,6 +21,9 @@ class EventSerializer(serializers.ModelSerializer):
         model = Event
         fields = '__all__'
 
+    
+
+
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
