@@ -14,33 +14,32 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import BasicAuthentication
 
+class EventViewSet(viewsets.ModelViewSet):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_fields = ['owner']
+    search_fields = ['=title', 'description']
+
 # class EventViewSet(viewsets.ModelViewSet):
-#     queryset = Event.objects.all()
 #     serializer_class = EventSerializer
 #     filter_backends = [SearchFilter, OrderingFilter]
 #     filterset_fields = ['owner']
-#     search_fields = ['=title', 'description']
-
-class EventViewSet(viewsets.ModelViewSet):
-    serializer_class = EventSerializer
-    filter_backends = [SearchFilter, OrderingFilter]
-    filterset_fields = ['owner']
-    search_fields = ['=title', 'description']
-    
-    def get_queryset(self):
-        user = self.request.user
-        return Event.objects.filter(owner=user)
+#     # search_fields = ['=title', 'description']
+#     # queryset = Event.objects.all()
+#     def get_queryset(self):
+#         user = self.request.user
+#         return Event.objects.filter(owner=user)
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
 class ItemViewSet(viewsets.ModelViewSet):
+    queryset = Item.objects.all()
     serializer_class = ItemSerializer
+    filterset_fields = ['event__id']
 
-    def get_queryset(self):
-        user = self.request.user
-        return Item.objects.filter(user=user)
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
