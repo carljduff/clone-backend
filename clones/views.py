@@ -14,22 +14,22 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import BasicAuthentication
 
-class EventViewSet(viewsets.ModelViewSet):
-    queryset = Event.objects.all()
-    serializer_class = EventSerializer
-    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ['owner']
-    search_fields = ['=title', 'description']
-
 # class EventViewSet(viewsets.ModelViewSet):
-#     serializer_class = EventSerializer
-#     filter_backends = [SearchFilter, OrderingFilter]
-#     filterset_fields = ['owner']
-#     # search_fields = ['=title', 'description']
-#     # queryset = Event.objects.all()
-#     def get_queryset(self):
-#         user = self.request.user
-#         return Event.objects.filter(owner=user)
+    # queryset = Event.objects.all()
+    # serializer_class = EventSerializer
+    # filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    # filterset_fields = ['owner']
+    # search_fields = ['=title', 'description']
+
+class EventViewSet(viewsets.ModelViewSet):
+    serializer_class = EventSerializer
+    filter_backends = [SearchFilter, OrderingFilter]
+    filterset_fields = ['owner']
+    # search_fields = ['=title', 'description']
+    # queryset = Event.objects.all()
+    def get_queryset(self):
+        user = self.request.user
+        return Event.objects.filter(owner=user)
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
