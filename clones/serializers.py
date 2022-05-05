@@ -5,6 +5,9 @@ from .models import Event, Category, Item, Post, CustomUser
 
 class EventSerializer(serializers.ModelSerializer):
     # date = serializers.SerializerMethodField('change_date_format')
+    date = serializers.DateField(format="%m-%d-%Y")
+    start_time = serializers.TimeField(format="%-l:%M")
+    end_time = serializers.TimeField(format="%-l:%M")
     # start_time = serializers.SerializerMethodField('change_start_format')
     # end_time = serializers.SerializerMethodField('change_end_format')
     owner = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all())
