@@ -25,6 +25,8 @@ class EventViewSet(viewsets.ModelViewSet):
     serializer_class = EventSerializer
     filter_backends = [SearchFilter, OrderingFilter]
     filterset_fields = ['owner']
+    ordering_fields = ['id']
+    ordering = ['id']
     # search_fields = ['=title', 'description']
     # queryset = Event.objects.all()
     def get_queryset(self):
@@ -34,7 +36,7 @@ class EventViewSet(viewsets.ModelViewSet):
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-
+   
 class ItemViewSet(viewsets.ModelViewSet):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
@@ -44,6 +46,11 @@ class ItemViewSet(viewsets.ModelViewSet):
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+
+
+class CustomUserViewSet(viewsets.ModelViewSet):
+    queryset = CustomUser.objects.all()
+    serializer_class = CustomUserSerializer
 
 class UserCreate(APIView):
     permission_classes = (permissions.AllowAny,)
