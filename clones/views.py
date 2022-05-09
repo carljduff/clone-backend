@@ -8,8 +8,8 @@ from django.http import HttpResponse
 from rest_framework import viewsets, permissions, status
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
-from .serializers import EventSerializer, CategorySerializer, ItemSerializer, PostSerializer, CustomUserSerializer
-from .models import Event, Category, Item, Post, CustomUser
+from .serializers import EventSerializer, CategorySerializer, ItemSerializer, PostSerializer, PhotoSerializer, CustomUserSerializer
+from .models import Event, Category, Item, Post, Photo, CustomUser
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import BasicAuthentication
@@ -22,6 +22,8 @@ from rest_framework.authentication import BasicAuthentication
     # search_fields = ['=title', 'description']
 
 class EventViewSet(viewsets.ModelViewSet):
+    # queryset = Event.objects.all()
+
     serializer_class = EventSerializer
     filter_backends = [SearchFilter, OrderingFilter]
     filterset_fields = ['owner']
@@ -48,7 +50,10 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
-
+class PhotoViewSet(viewsets.ModelViewSet):
+    queryset = Photo.objects.all()
+    serializer_class = PhotoSerializer
+    
 class CustomUserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer

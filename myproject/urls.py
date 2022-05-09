@@ -24,6 +24,7 @@ router.register(r'events', views.EventViewSet, basename='events')
 router.register(r'categories', views.CategoryViewSet)
 router.register(r'items', views.ItemViewSet)
 router.register(r'posts', views.PostViewSet)
+router.register(r'photos', views.PhotoViewSet)
 router.register(r'users', views.CustomUserViewSet)
 # router.register(r'users', views.UserViewSet)
 

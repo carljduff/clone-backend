@@ -5,7 +5,6 @@ from django.conf import settings
 class Event(models.Model):
     title = models.CharField(max_length=200)
     description = models.CharField(max_length=2000, null=True)
-    img = models.ImageField(upload_to='clones/images/', blank=True, default='')
     address = models.CharField(max_length=500, null=True)
     date = models.DateField()
     start_time = models.TimeField()
@@ -19,6 +18,7 @@ class Event(models.Model):
     status = models.CharField(max_length=3, choices=STATUS_CHOICES, default='1')
     guests = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='guests', blank=True)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    img = models.ForeignKey('Photo', null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
@@ -49,6 +49,9 @@ class Post(models.Model):
 
     def __str__(self):
         return self.text
+
+class Photo(models.Model):
+    img = models.ImageField(upload_to='clones/images/', blank=True, default='')
 
 class CustomUser(AbstractUser):
     def __str__(self):

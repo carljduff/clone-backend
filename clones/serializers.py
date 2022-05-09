@@ -1,6 +1,6 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
-from .models import Event, Category, Item, Post, CustomUser
+from .models import Event, Category, Item, Post, Photo, CustomUser
 # from django.contrib.auth.models import User
 
 class EventSerializer(serializers.ModelSerializer):
@@ -43,6 +43,12 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
+        fields = '__all__'
+
+class PhotoSerializer(serializers.ModelSerializer):
+    img = serializers.PrimaryKeyRelatedField(queryset=Event.objects.all())
+    class Meta:
+        model = Photo
         fields = '__all__'
 
 class CustomUserSerializer(serializers.ModelSerializer):
