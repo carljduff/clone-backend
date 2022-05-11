@@ -30,7 +30,7 @@ class EventViewSet(viewsets.ModelViewSet):
     ordering_fields = ['id']
     ordering = ['id']
     # search_fields = ['=title', 'description']
-    # queryset = Event.objects.all()
+    # queryset = Event.objects.all(
     
     def get_queryset(self):
         user = self.request.user
