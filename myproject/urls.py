@@ -15,8 +15,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework_simplejwt import views as jwt_views
+from clones import views
+from rest_framework import routers
+
+router = routers.DefaultRouter()
+router.register(r'events', views.EventViewSet, basename='events')
+router.register(r'categories', views.CategoryViewSet)
+router.register(r'items', views.ItemViewSet)
+router.register(r'posts', views.PostViewSet)
+router.register(r'photos', views.PhotoViewSet)
+router.register(r'users', views.CustomUserViewSet)
+# router.register(r'users', views.UserViewSet)
 
 urlpatterns = [
-    path('clones/', include('clones.urls')),
-    path('admin/', admin.site.urls)
+    path('signup/', views.UserCreate.as_view(), name="create_user"),
+    path('login/', jwt_views.TokenObtainPairView.as_view(), name='token_create'),
+    path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
+    path('admin/', admin.site.urls),
+    path('api-auth', include('rest_framework.urls')),
+    path('api/', include(router.urls))
 ]
