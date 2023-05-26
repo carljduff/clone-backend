@@ -33,7 +33,7 @@ class EventViewSet(viewsets.ModelViewSet):
     # queryset = Event.objects.all(
     
     def get_queryset(self):
-        user = self.request.user
+        user = self.request.user.id
         return Event.objects.filter(owner=user)
 
 class CategoryViewSet(viewsets.ModelViewSet):
